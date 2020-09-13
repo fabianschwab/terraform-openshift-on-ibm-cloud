@@ -6,12 +6,14 @@ This terraform example creates an OpenShift 4.3 Cluster on an IBM Cloud VPC GEN2
 
 Main parts provisioned by terraform defined in `main.tf`. Used modules `logDNA` and `sysDig`.
 
+1. Resource group, to group all created resources together
 1. Virtual Private Cloud (VPC) Generation 2
-1. Public Gateways to the internet, depending on the number of zones.
-1. Subnets within the VPC which is connected to the intended Public Gateway. Also depending of the amount of zones defined.
+1. Public Gateways to the internet, depending on the number of zones
+1. Subnets within the VPC which is connected to the intended Public Gateway. Also depending of the amount of zones defined
 1. RedHat OpenShift 4.3 Cluster with 3 worker nodes (each: 4Cores, 16GB Ram, 8Gbps Network Speed, OS Ubuntu 18 64, 100GB Storage)
 1. Cloud Object Storage for backing up the cluster registry
 1. Security Group Rule to allow incoming network traffic from the VPC load balancers
+1. Invites Users and adds them to the resource group with the specified roles
 1. Optional via Modules
    1. LogDNA Service Instance
    1. LogDNA Service Key
@@ -53,23 +55,25 @@ terraform destroy
 
 ## Inputs
 
-| Name                    | Description                                            | Type     | Default Value        | Required |
-| ----------------------- | ------------------------------------------------------ | -------- | -------------------- | -------- |
-| ibmcloud_api_key        | An API key for IBM Cloud services.                     | `string` | -                    | yes      |
-| ibm_region              | Region                                                 | `string` | `eu-de`              | yes      |
-| ibm_zones               | One or more Zones                                      | `list`   | `[eu-de-3, eu-de-2]` | yes      |
-| ibm_resource_group_name | Resource Group Name                                    | `string` | -                    | yes      |
-| prefix                  | Prefix for the naming convention                       | `string` | `fs-dev`             | no       |
-| ibm_vpc_generation      | Virtual Private Cloud Gen 2                            | `int`    | 2                    | yes      |
-| openshift_flavor        | The flavor of the VPC worker node that you want to use | `string` | `bx2.4x16`           | yes      |
-| openshift_kube_version  | Version of cluster                                     | `string` | `4.3.31_openshift`   | yes      |
-| worker_count            | Number of worker nodes                                 | `int`    | 2                    | no       |
-| cos_plan                | Plan for Cloud Object Storage                          | `string` | `standard`           | yes      |
-| cos_location            | Location for Cloud Object Storage                      | `string` | `global`             | no       |
-| enable_logdna           | LogDNA Service                                         | `bool`   | `false`              | no       |
-| logdna_plan             | Plan for LogDNA                                        | `string` | -                    | no       |
-| enable_sysdig           | Sysdig Service                                         | `bool`   | `false`              | no       |
-| sysdig_plan             | lan for Sysdig                                         | `string` | -                    | no       |
+| Name                    | Description                                            | Type           | Default Value                             | Required |
+| ----------------------- | ------------------------------------------------------ | -------------- | ----------------------------------------- | -------- |
+| ibmcloud_api_key        | An API key for IBM Cloud services.                     | `string`       | -                                         | yes      |
+| ibm_region              | Region                                                 | `string`       | `eu-de`                                   | yes      |
+| ibm_zones               | One or more Zones                                      | `list(string)` | `[eu-de-3, eu-de-2]`                      | yes      |
+| ibm_resource_group_name | Resource Group Name                                    | `string`       | `terraform-resource-group`                | yes      |
+| prefix                  | Prefix for the naming convention                       | `string`       | `fs-dev`                                  | no       |
+| ibm_vpc_generation      | Virtual Private Cloud Gen 2                            | `int`          | 2                                         | yes      |
+| openshift_flavor        | The flavor of the VPC worker node that you want to use | `string`       | `bx2.4x16`                                | yes      |
+| openshift_kube_version  | Version of cluster                                     | `string`       | `4.3.31_openshift`                        | yes      |
+| worker_count            | Number of worker nodes                                 | `int`          | 2                                         | no       |
+| cos_plan                | Plan for Cloud Object Storage                          | `string`       | `standard`                                | yes      |
+| cos_location            | Location for Cloud Object Storage                      | `string`       | `global`                                  | no       |
+| enable_logdna           | LogDNA Service                                         | `bool`         | `false`                                   | no       |
+| logdna_plan             | Plan for LogDNA                                        | `string`       | `lite`                                    | no       |
+| enable_sysdig           | Sysdig Service                                         | `bool`         | `false`                                   | no       |
+| sysdig_plan             | Plan for Sysdig                                        | `string`       | `lite`                                    | no       |
+| users                   | List of user e-mail addresses                          | `list(string)` | -                                         | yes      |
+| access_roles            | List of valid roles                                    | `string`       | `["Administrator", "Operator", "Editor"]` | yes      |
 
 ## Outputs
 

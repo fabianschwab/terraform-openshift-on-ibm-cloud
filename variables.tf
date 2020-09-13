@@ -25,10 +25,25 @@ variable "ibm_zones" {
   default     = ["eu-de-3", "eu-de-2"]
 }
 
-variable "ibm_resource_group_name" {
+###################################
+# IAM - Identity Access Management
+###################################
+
+variable "resource_group" {
   type        = string
   description = "Name of resource group to provision resources."
-  default     = "dach-terraform-rg"
+  default     = "terraform-resource-group"
+}
+
+variable "users" {
+  type        = list(string)
+  description = "E-Mail addresses of all users, which should be invited to this project."
+}
+
+variable "access_roles" {
+  type        = list(string)
+  description = "Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, and Editor."
+  default     = ["Administrator", "Operator", "Editor"]
 }
 
 ######

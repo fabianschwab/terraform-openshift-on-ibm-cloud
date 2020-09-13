@@ -17,9 +17,25 @@ provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
 }
 
-# Fetch resource group id via provided name
-data "ibm_resource_group" "resource_group" {
-  name = var.ibm_resource_group_name
+###################################
+# IAM - Identity Access Management
+###################################
+
+
+# Create resource group where all resources are going to be provisioned
+resource "ibm_resource_group" "resource_group" {
+  name = var.resource_group
+}
+
+# Invite all users and assign to resource group with specified roles
+resource "ibm_iam_user_invite" "invite_user" {
+  users = var.users
+  iam_policy {
+    roles = var.access_roles
+    resources {
+      resource_group_id = ibm_resource_group.resource_group.id
+    }
+  }
 }
 
 #################
@@ -30,7 +46,7 @@ data "ibm_resource_group" "resource_group" {
 resource "ibm_is_vpc" "vpc" {
   name = "${var.prefix}-vpc-gen${var.ibm_vpc_generation}"
 
-  resource_group = data.ibm_resource_group.resource_group.id
+  resource_group = ibm_resource_group.resource_group.id
 }
 
 # Public Gateways to access the internet
@@ -40,7 +56,7 @@ resource "ibm_is_public_gateway" "public_gateway" {
   name           = "${var.prefix}-public-gateway-${each.value}"
   vpc            = ibm_is_vpc.vpc.id
   zone           = each.value
-  resource_group = data.ibm_resource_group.resource_group.id
+  resource_group = ibm_resource_group.resource_group.id
 }
 
 # Subnets within the VPC. Also attaching the public gateway.
@@ -51,7 +67,7 @@ resource "ibm_is_subnet" "subnet" {
   vpc  = ibm_is_vpc.vpc.id
   zone = each.value
 
-  resource_group           = data.ibm_resource_group.resource_group.id
+  resource_group           = ibm_resource_group.resource_group.id
   total_ipv4_address_count = 256
 
   public_gateway = ibm_is_public_gateway.public_gateway[each.value].id
@@ -92,7 +108,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   # Required for Gen2 VPC with Openshift to back up Openshift registry
   cos_instance_crn = ibm_resource_instance.cos_instance.crn
 
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = ibm_resource_group.resource_group.id
   kube_version      = var.openshift_kube_version
   worker_count      = var.worker_count
 }
@@ -104,7 +120,7 @@ resource "ibm_resource_instance" "cos_instance" {
   plan     = var.cos_plan
   location = var.cos_location
 
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = ibm_resource_group.resource_group.id
 }
 
 # Gen 2 VPC denies all incoming traffic by default to the worker nodes.
@@ -132,7 +148,7 @@ module "logging" {
   # Input variables
   prefix            = var.prefix
   ibm_region        = var.ibm_region
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = ibm_resource_group.resource_group.id
   plan              = var.logdna_plan
   cluster_id        = ibm_container_vpc_cluster.cluster.id
 }
@@ -147,7 +163,7 @@ module "monitoring" {
   # Input variables
   prefix            = var.prefix
   ibm_region        = var.ibm_region
-  resource_group_id = data.ibm_resource_group.resource_group.id
+  resource_group_id = ibm_resource_group.resource_group.id
   plan              = var.sysdig_plan
   cluster_id        = ibm_container_vpc_cluster.cluster.id
 }
