@@ -57,6 +57,17 @@ resource "ibm_is_subnet" "subnet" {
   public_gateway = ibm_is_public_gateway.public_gateway[each.value].id
 }
 
+# Regrab data after all dependencies were executed in order to get the subnets for cluster creating
+data "ibm_is_vpc" "vpc_data" {
+  name = ibm_is_vpc.vpc.name
+
+  depends_on = [
+    ibm_is_vpc.vpc,
+    ibm_is_subnet.subnet,
+    ibm_is_public_gateway.public_gateway
+  ]
+}
+
 # Openshift multizone cluster on VPC
 resource "ibm_container_vpc_cluster" "cluster" {
   flavor = var.openshift_flavor
@@ -66,11 +77,12 @@ resource "ibm_container_vpc_cluster" "cluster" {
   depends_on = [
     ibm_is_vpc.vpc,
     ibm_is_subnet.subnet,
-    ibm_is_public_gateway.public_gateway
+    ibm_is_public_gateway.public_gateway,
+    data.ibm_is_vpc.vpc_data
   ]
 
   dynamic "zones" {
-    for_each = ibm_is_vpc.vpc.subnets
+    for_each = data.ibm_is_vpc.vpc_data.subnets
     content {
       name      = zones.value.zone
       subnet_id = zones.value.id
