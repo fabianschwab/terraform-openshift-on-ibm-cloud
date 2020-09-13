@@ -73,7 +73,7 @@ terraform destroy
 | enable_sysdig           | Sysdig Service                                         | `bool`         | `false`                                   | no       |
 | sysdig_plan             | Plan for Sysdig                                        | `string`       | `lite`                                    | no       |
 | users                   | List of user e-mail addresses                          | `list(string)` | -                                         | yes      |
-| access_roles            | List of valid roles                                    | `string`       | `["Administrator", "Operator", "Editor"]` | yes      |
+| access_roles            | List of valid roles                                    | `list(string)` | `["Administrator", "Operator", "Editor"]` | yes      |
 
 ## Outputs
 
