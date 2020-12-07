@@ -1,4 +1,3 @@
-
 variable "prefix" {
   type        = string
   description = "Prefix for all resources which are created. Must begin with a letter."

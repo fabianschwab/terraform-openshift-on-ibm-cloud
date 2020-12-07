@@ -4,8 +4,8 @@ terraform {
 
   required_providers {
     ibm = {
-      source  = "IBM-Cloud/ibm"
-      version = "1.11.2"
+      source  = "ibm-cloud/ibm"
+      version = ">= 1.16.1"
     }
     # Null Provider for executing shell commands
     null = {
