@@ -57,25 +57,24 @@ terraform destroy
 
 ## Inputs
 
-| Name                    | Description                                            | Type           | Default Value                             | Required |
-| ----------------------- | ------------------------------------------------------ | -------------- | ----------------------------------------- | -------- |
-| ibmcloud_api_key        | An API key for IBM Cloud services.                     | `string`       | -                                         | yes      |
-| ibm_region              | Region                                                 | `string`       | `eu-de`                                   | yes      |
-| ibm_zones               | One or more Zones                                      | `list(string)` | `[eu-de-3, eu-de-2]`                      | yes      |
-| ibm_resource_group_name | Resource Group Name                                    | `string`       | `terraform-resource-group`                | yes      |
-| prefix                  | Prefix for the naming convention                       | `string`       | `fs-dev`                                  | no       |
-| ibm_vpc_generation      | Virtual Private Cloud Gen 2                            | `int`          | 2                                         | yes      |
-| openshift_flavor        | The flavor of the VPC worker node that you want to use | `string`       | `bx2.4x16`                                | yes      |
-| openshift_kube_version  | Version of cluster                                     | `string`       | `4.5.18_openshift`                        | yes      |
-| worker_count            | Number of worker nodes                                 | `int`          | 2                                         | no       |
-| cos_plan                | Plan for Cloud Object Storage                          | `string`       | `standard`                                | yes      |
-| cos_location            | Location for Cloud Object Storage                      | `string`       | `global`                                  | no       |
-| enable_logdna           | LogDNA Service                                         | `bool`         | `false`                                   | no       |
-| logdna_plan             | Plan for LogDNA                                        | `string`       | `lite`                                    | no       |
-| enable_sysdig           | Sysdig Service                                         | `bool`         | `false`                                   | no       |
-| sysdig_plan             | Plan for Sysdig                                        | `string`       | `lite`                                    | no       |
-| users                   | List of user e-mail addresses                          | `list(string)` | -                                         | yes      |
-| access_roles            | List of valid roles                                    | `list(string)` | `["Administrator", "Operator", "Editor"]` | yes      |
+| Name                    | Description                                            | Type           | Default Value              |
+| ----------------------- | ------------------------------------------------------ | -------------- | -------------------------- |
+| ibmcloud_api_key        | An API key for IBM Cloud services.                     | `string`       | -                          |
+| ibm_region              | Region                                                 | `string`       | `eu-de`                    |
+| ibm_zones               | One or more Zones                                      | `list(string)` | `[eu-de-3, eu-de-2]`       |
+| ibm_resource_group_name | Resource Group Name                                    | `string`       | `terraform-resource-group` |
+| prefix                  | Prefix for the naming convention                       | `string`       | `fs-dev`                   |
+| openshift_flavor        | The flavor of the VPC worker node that you want to use | `string`       | `bx2.4x16`                 |
+| openshift_kube_version  | Version of cluster                                     | `string`       | `4.5.18_openshift`         |
+| worker_count            | Number of worker nodes                                 | `int`          | 2                          |
+| cos_plan                | Plan for Cloud Object Storage                          | `string`       | `standard`                 |
+| cos_location            | Location for Cloud Object Storage                      | `string`       | `global`                   |
+| enable_logdna           | LogDNA Service                                         | `bool`         | `false`                    |
+| logdna_plan             | Plan for LogDNA                                        | `string`       | `lite`                     |
+| enable_sysdig           | Sysdig Service                                         | `bool`         | `false`                    |
+| sysdig_plan             | Plan for Sysdig                                        | `string`       | `lite`                     |
+| users                   | List of user e-mail addresses                          | `list(string)` | -                          |
+| access_roles            | List of valid roles                                    | `list(string)` | `["Viewer", "Editor"]`     |
 
 ## Outputs
 
