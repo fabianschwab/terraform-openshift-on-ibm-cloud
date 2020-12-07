@@ -45,7 +45,7 @@ resource "ibm_iam_user_invite" "invite_user" {
 
 # Virtual Private Cloud
 resource "ibm_is_vpc" "vpc" {
-  name = "${var.prefix}-vpc-gen${var.ibm_vpc_generation}"
+  name = "${var.prefix}-vpc-gen2"
 
   resource_group = ibm_resource_group.resource_group.id
 }
