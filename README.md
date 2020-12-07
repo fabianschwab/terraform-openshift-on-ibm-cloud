@@ -13,7 +13,9 @@ Main parts provisioned by terraform defined in `main.tf`. Used modules `logDNA` 
 1. RedHat OpenShift 4.x Cluster with 3 worker nodes (each: 4Cores, 16GB Ram, 8Gbps Network Speed, OS Ubuntu 18 64, 100GB Storage)
 1. Cloud Object Storage for backing up the cluster registry
 1. Security Group Rule to allow incoming network traffic from the VPC load balancers
-1. Invites Users and adds them to the resource group with the specified roles
+1. Access Group for easier rights management
+1. Access Group Policy to the resource group for all users with certain rights
+1. Invites Users and adds them to the access group
 1. Optional via Modules
    1. LogDNA Service Instance
    1. LogDNA Service Key

@@ -28,7 +28,7 @@ resource "ibm_resource_group" "resource_group" {
   name = var.resource_group
 }
 
-# Create access group for eaasier rights management
+# Create access group for easier rights management
 resource "ibm_iam_access_group" "access_group" {
   name = "${var.prefix}-access-group"
 }
