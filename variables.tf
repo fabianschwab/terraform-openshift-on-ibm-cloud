@@ -70,7 +70,7 @@ variable "openshift_flavor" {
 variable "openshift_kube_version" {
   type        = string
   description = "Version of cluster. For a list run 'ibmcloud ks versions'"
-  default     = "4.3.31_openshift"
+  default     = "4.5.18_openshift"
 }
 
 variable "worker_count" {
