@@ -12,7 +12,8 @@ terraform {
 
 # IBM cloud terraform provider version, region to provision and generation of the Virtual Private Cloud
 provider "ibm" {
-  generation       = var.ibm_vpc_generation
+  # Gerneration of the Virtual Private Cloud. Gen2 needed for OpenShift."
+  generation       = 2
   region           = var.ibm_region
   ibmcloud_api_key = var.ibmcloud_api_key
 }

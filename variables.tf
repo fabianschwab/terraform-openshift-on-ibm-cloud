@@ -47,16 +47,6 @@ variable "access_roles" {
   default     = ["Administrator", "Operator", "Editor"]
 }
 
-######
-# VPC 
-######
-
-variable "ibm_vpc_generation" {
-  type        = number
-  description = "Gerneration of the Virtual Private Cloud. Classic Gen1 with value '1' or Gen2 with value '2'."
-  default     = 2
-}
-
 ############
 # Openshift
 ############
@@ -69,7 +59,7 @@ variable "openshift_flavor" {
 
 variable "openshift_kube_version" {
   type        = string
-  description = "Version of cluster. For a list run 'ibmcloud ks versions'"
+  description = "Version of cluster. For a list run 'ibmcloud ks versions'."
   default     = "4.5.18_openshift"
 }
 
@@ -81,13 +71,13 @@ variable "worker_count" {
 
 variable "cos_plan" {
   type        = string
-  description = "Plan for Cloud Object Storage"
+  description = "Plan for Cloud Object Storage."
   default     = "standard"
 }
 
 variable "cos_location" {
   type        = string
-  description = "Location for Cloud Object Storage"
+  description = "Location for Cloud Object Storage."
   default     = "global"
 }
 
@@ -103,7 +93,7 @@ variable "enable_logdna" {
 
 variable "logdna_plan" {
   type        = string
-  description = "Plan for LogDNA (e.g. lite, 7-day, ...)"
+  description = "Plan for LogDNA (e.g. lite, 7-day, ...)."
   default     = "lite"
 }
 
@@ -115,6 +105,6 @@ variable "enable_sysdig" {
 
 variable "sysdig_plan" {
   type        = string
-  description = "Plan for Sysdig (e.g. lite, graduated-tier, ...)"
+  description = "Plan for Sysdig (e.g. lite, graduated-tier, ...)."
   default     = "lite"
 }
