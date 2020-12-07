@@ -1,6 +1,6 @@
-# VPC Gen 2 and OpenShift 4.3
+# VPC Gen 2 and OpenShift 4.x
 
-This terraform example creates an OpenShift 4.3 Cluster on an IBM Cloud VPC GEN2 Infrastructure with logging and monitoring services.
+This terraform example creates an OpenShift 4.x Cluster on an IBM Cloud VPC GEN2 Infrastructure with logging and monitoring services.
 
 ## Infrastructure
 
@@ -10,7 +10,7 @@ Main parts provisioned by terraform defined in `main.tf`. Used modules `logDNA` 
 1. Virtual Private Cloud (VPC) Generation 2
 1. Public Gateways to the internet, depending on the number of zones
 1. Subnets within the VPC which is connected to the intended Public Gateway. Also depending of the amount of zones defined
-1. RedHat OpenShift 4.3 Cluster with 3 worker nodes (each: 4Cores, 16GB Ram, 8Gbps Network Speed, OS Ubuntu 18 64, 100GB Storage)
+1. RedHat OpenShift 4.x Cluster with 3 worker nodes (each: 4Cores, 16GB Ram, 8Gbps Network Speed, OS Ubuntu 18 64, 100GB Storage)
 1. Cloud Object Storage for backing up the cluster registry
 1. Security Group Rule to allow incoming network traffic from the VPC load balancers
 1. Invites Users and adds them to the resource group with the specified roles
@@ -64,7 +64,7 @@ terraform destroy
 | prefix                  | Prefix for the naming convention                       | `string`       | `fs-dev`                                  | no       |
 | ibm_vpc_generation      | Virtual Private Cloud Gen 2                            | `int`          | 2                                         | yes      |
 | openshift_flavor        | The flavor of the VPC worker node that you want to use | `string`       | `bx2.4x16`                                | yes      |
-| openshift_kube_version  | Version of cluster                                     | `string`       | `4.3.31_openshift`                        | yes      |
+| openshift_kube_version  | Version of cluster                                     | `string`       | `4.5.18_openshift`                        | yes      |
 | worker_count            | Number of worker nodes                                 | `int`          | 2                                         | no       |
 | cos_plan                | Plan for Cloud Object Storage                          | `string`       | `standard`                                | yes      |
 | cos_location            | Location for Cloud Object Storage                      | `string`       | `global`                                  | no       |
