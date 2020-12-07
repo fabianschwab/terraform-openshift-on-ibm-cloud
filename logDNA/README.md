@@ -4,7 +4,7 @@ This terraform example creates a LogDNA instance and is bound to the Red Hat Ope
 
 ## Infrastructure
 
-Main parts provisioned by terraform defined in `main.tf`.
+Main parts provisioned by terraform defined in `main.tf`. Test
 
 1. LogDNA Service Instance
 1. LogDNA Service Key
@@ -20,7 +20,7 @@ Main parts provisioned by terraform defined in `main.tf`.
 
 | Name | Version    |
 | ---- | ---------- |
-| ibm  | >= v1.11.2 |
+| ibm  | >= v1.16.1 |
 | null | >= 2.1     |
 
 The `null` provider is used to execute commands as no resource is available for the desired purpose.
