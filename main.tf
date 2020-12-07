@@ -28,15 +28,26 @@ resource "ibm_resource_group" "resource_group" {
   name = var.resource_group
 }
 
-# Invite all users and assign to resource group with specified roles
-resource "ibm_iam_user_invite" "invite_user" {
-  users = var.users
-  iam_policy {
-    roles = var.access_roles
-    resources {
-      resource_group_id = ibm_resource_group.resource_group.id
-    }
+# Create access group for eaasier rights management
+resource "ibm_iam_access_group" "access_group" {
+  name = "${var.prefix}-access-group"
+}
+
+# Create a policy for the access group to that all users can see the resource group
+resource "ibm_iam_access_group_policy" "access_group_policy" {
+  access_group_id = ibm_iam_access_group.access_group.id
+  roles           = var.access_roles
+
+  resources {
+    resource_type = "resource-group"
+    resource      = ibm_resource_group.resource_group.id
   }
+}
+
+# Invite all users and assign them to the access group
+resource "ibm_iam_user_invite" "invite_user" {
+  users         = var.users
+  access_groups = [ibm_iam_access_group.access_group.id]
 }
 
 #################

@@ -43,8 +43,8 @@ variable "users" {
 
 variable "access_roles" {
   type        = list(string)
-  description = "Valid roles are Writer, Reader, Manager, Administrator, Operator, Viewer, and Editor."
-  default     = ["Administrator", "Operator", "Editor"]
+  description = "Access roles (Writer, Reader, Manager, Administrator, Operator, Viewer, Editor) for the resouce group."
+  default     = ["Viewer", "Editor"]
 }
 
 ############
