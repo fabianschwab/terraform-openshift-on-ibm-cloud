@@ -1,19 +1,17 @@
 # Terraform version with community provider
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 0.14"
 
   required_providers {
     ibm = {
       source  = "ibm-cloud/ibm"
-      version = ">= 1.16.1"
+      version = ">= 1.28.0"
     }
   }
 }
 
-# IBM cloud terraform provider version, region to provision and generation of the Virtual Private Cloud
+# Region to provision and generation of the Virtual Private Cloud
 provider "ibm" {
-  # Gerneration of the Virtual Private Cloud. Gen2 needed for OpenShift."
-  generation       = 2
   region           = var.ibm_region
   ibmcloud_api_key = var.ibmcloud_api_key
 }

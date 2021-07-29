@@ -47,13 +47,13 @@ terraform destroy
 
 | Name      | Version  |
 | --------- | -------- |
-| terraform | >= v0.13 |
+| terraform | >= v0.14 |
 
 ## Providers
 
 | Name | Version    |
 | ---- | ---------- |
-| ibm  | >= v1.16.1 |
+| ibm  | >= v1.28.0 |
 
 ## Inputs
 
@@ -91,5 +91,6 @@ terraform destroy
 ## References
 
 - Terraform [Provider Registry](https://registry.terraform.io/browse/providers)
-- IBM Cloud provider documentation for [terraform](https://cloud.ibm.com/docs/terraform?topic=terraform-index-of-terraform-resources-and-data-sources)
+- IBM Cloud provider [terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest) on terraform.io
+- IBM Cloud provider documentation for [terraform](https://cloud.ibm.com/docs/ibm-cloud-provider-for-terraform) on cloud.ibm.com
 - Git repository IBM [terraform provider](https://github.com/IBM-Cloud/terraform-provider-ibm)
