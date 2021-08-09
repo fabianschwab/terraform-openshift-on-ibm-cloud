@@ -20,6 +20,18 @@ provider "ibm" {
 # IAM - Identity Access Management
 ###################################
 
+# When you want to use an existing access group use this part.
+# data "ibm_iam_access_group" "access_group_data" {
+#   access_group_name = var.access_group
+# }
+# resource "ibm_iam_access_group_policy" "access_group_policy" {
+#   access_group_id = data.ibm_iam_access_group.access_group_data.groups[0].id
+#   roles           = var.access_roles
+
+#   resources {
+#     resource_group_id = ibm_resource_group.resource_group.id
+#   }
+# }
 
 # Create resource group where all resources are going to be provisioned
 resource "ibm_resource_group" "resource_group" {
