@@ -1,0 +1,11 @@
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleNotification
+metadata:
+  name: security-notice
+spec:
+  backgroundColor: '#616161'
+  color: '#fff'
+  location: BannerTop
+  text: >-
+    This cluster is for development only. Expect that it get resettet from time to time.
