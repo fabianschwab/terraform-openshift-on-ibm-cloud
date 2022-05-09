@@ -38,7 +38,7 @@ variable "resource_group" {
 
 variable "enable_user_invite" {
   type        = bool
-  description = "If enabled all users from variable `users` will be invited."
+  description = "If enabled, all users from variable `users` will be invited."
   default     = false
 }
 variable "users" {

@@ -14,16 +14,13 @@ Main parts provisioned by terraform defined in `main.tf`. Test
 
 | Name      | Version  |
 | --------- | -------- |
-| terraform | >= v0.13 |
+| terraform | >= v1.0  |
 
 ## Providers
 
 | Name | Version    |
 | ---- | ---------- |
-| ibm  | >= v1.16.1 |
-| null | >= 2.1     |
-
-The `null` provider is used to execute commands as no resource is available for the desired purpose.
+| ibm  | >= v1.41.0 |
 
 ## Inputs
 

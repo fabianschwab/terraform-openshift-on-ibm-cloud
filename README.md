@@ -47,34 +47,36 @@ terraform destroy
 
 | Name      | Version  |
 | --------- | -------- |
-| terraform | >= v0.14 |
+| terraform | >= v1.0  |
 
 ## Providers
 
 | Name | Version    |
 | ---- | ---------- |
-| ibm  | >= v1.28.0 |
+| ibm  | >= v1.41.0 |
 
 ## Inputs
 
-| Name                    | Description                                            | Type           | Default Value              |
-| ----------------------- | ------------------------------------------------------ | -------------- | -------------------------- |
-| ibmcloud_api_key        | An API key for IBM Cloud services.                     | `string`       | -                          |
-| ibm_region              | Region                                                 | `string`       | `eu-de`                    |
-| ibm_zones               | One or more Zones                                      | `list(string)` | `[eu-de-3, eu-de-2]`       |
-| ibm_resource_group_name | Resource Group Name                                    | `string`       | `terraform-resource-group` |
-| prefix                  | Prefix for the naming convention                       | `string`       | `fs-dev`                   |
-| openshift_flavor        | The flavor of the VPC worker node that you want to use | `string`       | `bx2.4x16`                 |
-| openshift_kube_version  | Version of cluster                                     | `string`       | `4.5.18_openshift`         |
-| worker_count            | Number of worker nodes                                 | `int`          | 2                          |
-| cos_plan                | Plan for Cloud Object Storage                          | `string`       | `standard`                 |
-| cos_location            | Location for Cloud Object Storage                      | `string`       | `global`                   |
-| enable_logdna           | LogDNA Service                                         | `bool`         | `false`                    |
-| logdna_plan             | Plan for LogDNA                                        | `string`       | `lite`                     |
-| enable_sysdig           | Sysdig Service                                         | `bool`         | `false`                    |
-| sysdig_plan             | Plan for Sysdig                                        | `string`       | `lite`                     |
-| users                   | List of user e-mail addresses                          | `list(string)` | -                          |
-| access_roles            | List of valid roles                                    | `list(string)` | `["Viewer", "Editor"]`     |
+| Name                    | Description                                                  | Type           | Default Value              |
+| ----------------------- | ------------------------------------------------------------ | -------------- | -------------------------- |
+| ibmcloud_api_key        | An API key for IBM Cloud services.                           | `string`       | -                          |
+| ibm_region              | Region                                                       | `string`       | `eu-de`                    |
+| ibm_zones               | One or more Zones                                            | `list(string)` | `[eu-de-3, eu-de-2]`       |
+| ibm_resource_group_name | Resource Group Name                                          | `string`       | `terraform-resource-group` |
+| prefix                  | Prefix for the naming convention                             | `string`       | `fs-dev`                   |
+| openshift_flavor        | The flavor of the VPC worker node that you want to use       | `string`       | `bx2.4x16`                 |
+| openshift_kube_version  | Version of cluster                                           | `string`       | -                          |
+| worker_count            | Number of worker nodes                                       | `int`          | 3                          |
+| cos_plan                | Plan for Cloud Object Storage                                | `string`       | `standard`                 |
+| cos_location            | Location for Cloud Object Storage                            | `string`       | `global`                   |
+| enable_logdna           | LogDNA Service                                               | `bool`         | `false`                    |
+| logdna_plan             | Plan for LogDNA                                              | `string`       | `lite`                     |
+| enable_sysdig           | Sysdig Service                                               | `bool`         | `false`                    |
+| sysdig_plan             | Plan for Sysdig                                              | `string`       | `lite`                     |
+| enable_user_invite      | If enabled, all users from variable `users` will be invited. | `bool`         | `false`                    |
+| users                   | List of user e-mail addresses                                | `list(string)` | -                          |
+| access_roles_platform   | List of valid platform roles                                 | `list(string)` | `[""Editor"]`              |
+| access_roles_services   | List of valid services roles                                 | `list(string)` | `["Manager"]`              |
 
 ## Outputs
 
@@ -91,6 +93,6 @@ terraform destroy
 ## References
 
 - Terraform [Provider Registry](https://registry.terraform.io/browse/providers)
-- IBM Cloud provider [terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest) on terraform.io
+- IBM Cloud provider documentation for [terraform](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest) on terraform.io
 - IBM Cloud provider documentation for [terraform](https://cloud.ibm.com/docs/ibm-cloud-provider-for-terraform) on cloud.ibm.com
 - Git repository IBM [terraform provider](https://github.com/IBM-Cloud/terraform-provider-ibm)
