@@ -1,11 +1,9 @@
 # Terraform version with community provider
 terraform {
-  required_version = ">= 0.14"
-
   required_providers {
     ibm = {
-      source  = "ibm-cloud/ibm"
-      version = ">= 1.28.0"
+      source  = "IBM-Cloud/ibm"
+      version = "1.41.0"
     }
   }
 }
@@ -46,7 +44,7 @@ resource "ibm_iam_access_group" "access_group" {
 # Create a policy for the access group to that all users can see the resource group
 resource "ibm_iam_access_group_policy" "access_group_policy" {
   access_group_id = ibm_iam_access_group.access_group.id
-  roles           = var.access_roles
+  roles           = concat(var.access_roles_platform, var.access_roles_services)
 
   resources {
     resource_type = "resource-group"
@@ -56,6 +54,8 @@ resource "ibm_iam_access_group_policy" "access_group_policy" {
 
 # Invite all users and assign them to the access group
 resource "ibm_iam_user_invite" "invite_user" {
+  count = var.enable_user_invite == true ? 1 : 0
+
   users         = var.users
   access_groups = [ibm_iam_access_group.access_group.id]
 }

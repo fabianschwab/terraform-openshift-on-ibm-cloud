@@ -36,15 +36,27 @@ variable "resource_group" {
   default     = "terraform-resource-group"
 }
 
+variable "enable_user_invite" {
+  type        = bool
+  description = "If enabled all users from variable `users` will be invited."
+  default     = false
+}
 variable "users" {
   type        = list(string)
-  description = "E-Mail addresses of all users, which should be invited to this project."
+  description = "E-Mail addresses of all users, which should be invited to this project. When enabled."
+  default     = ["example@email.com"]
 }
 
-variable "access_roles" {
+variable "access_roles_platform" {
   type        = list(string)
-  description = "Access roles (Writer, Reader, Manager, Administrator, Operator, Viewer, Editor) for the resouce group."
-  default     = ["Viewer", "Editor"]
+  description = "Platform access roles (`viewer`, `operator`, `editor`, `administrator`) for the resouce group."
+  default     = ["Editor"]
+}
+
+variable "access_roles_services" {
+  type        = list(string)
+  description = "Service access roles (`reader`, `writer`, `manager`) for the resouce group."
+  default     = ["Manager"]
 }
 
 ############
@@ -60,13 +72,12 @@ variable "openshift_flavor" {
 variable "openshift_kube_version" {
   type        = string
   description = "Version of cluster. For a list run 'ibmcloud ks versions'."
-  default     = "4.5.18_openshift"
 }
 
 variable "worker_count" {
   type        = number
   description = "Number of worker nodes."
-  default     = 2
+  default     = 3
 }
 
 variable "cos_plan" {
