@@ -66,7 +66,7 @@ terraform destroy
 | prefix                  | Prefix for the naming convention                             | `string`       | `fs-dev`                   |
 | openshift_flavor        | The flavor of the VPC worker node that you want to use       | `string`       | `bx2.4x16`                 |
 | openshift_kube_version  | Version of cluster                                           | `string`       | -                          |
-| worker_count            | Number of worker nodes                                       | `int`          | 3                          |
+| worker_count            | Number of nodes per zone. If single zone minimun are 2 nodes.| `int`          | 3                          |
 | cos_plan                | Plan for Cloud Object Storage                                | `string`       | `standard`                 |
 | cos_location            | Location for Cloud Object Storage                            | `string`       | `global`                   |
 | enable_logdna           | LogDNA Service                                               | `bool`         | `false`                    |
