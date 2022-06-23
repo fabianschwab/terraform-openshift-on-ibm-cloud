@@ -10,7 +10,7 @@ Main parts provisioned by terraform defined in `main.tf`. Used modules `logDNA` 
 1. Virtual Private Cloud (VPC) Generation 2
 1. Public Gateways to the internet, depending on the number of zones
 1. Subnets within the VPC which is connected to the intended Public Gateway. Also depending of the amount of zones defined
-1. RedHat OpenShift 4.x Cluster with 3 worker nodes (each: 4Cores, 16GB Ram, 8Gbps Network Speed, OS Ubuntu 18 64, 100GB Storage)
+1. RedHat OpenShift 4.x Cluster with 3 worker nodes (each: 4Cores, 16GiB Ram, 8Gbps Network Speed, OS Ubuntu 18 64, 100GB Storage)
 1. Cloud Object Storage for backing up the cluster registry
 1. Security Group Rule to allow incoming network traffic from the VPC load balancers
 1. Access Group for easier rights management
@@ -65,7 +65,7 @@ terraform destroy
 | prefix                  | Prefix for the naming convention                             | `string`       | `fs-dev`                   |
 | openshift_flavor        | The flavor of the VPC worker node that you want to use       | `string`       | `bx2.4x16`                 |
 | openshift_kube_version  | Version of cluster                                           | `string`       | -                          |
-| worker_count            | Number of nodes per zone. If single zone minimun are 2 nodes.| `int`          | 1                          |
+| worker_count            | Number of nodes per zone. If single zone minimum are 2 nodes.| `int`          | 1                          |
 | cos_plan                | Plan for Cloud Object Storage                                | `string`       | `standard`                 |
 | cos_location            | Location for Cloud Object Storage                            | `string`       | `global`                   |
 | enable_logdna           | LogDNA Service                                               | `bool`         | `false`                    |
