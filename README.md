@@ -59,7 +59,6 @@ terraform destroy
 
 | Name                    | Description                                                  | Type           | Default Value              |
 | ----------------------- | ------------------------------------------------------------ | -------------- | -------------------------- |
-| ibmcloud_api_key        | An API key for IBM Cloud services.                           | `string`       | -                          |
 | ibm_region              | Region                                                       | `string`       | `eu-de`                    |
 | ibm_zones               | One or more Zones                                            | `list(string)` | `[eu-de-3, eu-de-2]`       |
 | ibm_resource_group_name | Resource Group Name                                          | `string`       | `terraform-resource-group` |

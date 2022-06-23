@@ -2,12 +2,6 @@
 # General
 ##########
 
-variable "ibmcloud_api_key" {
-  type        = string
-  description = "IBM Cloud API Key."
-  sensitive   = true
-}
-
 variable "prefix" {
   type        = string
   description = "Prefix for all resources which are created. Must begin with a letter."
@@ -76,8 +70,8 @@ variable "openshift_kube_version" {
 
 variable "worker_count" {
   type        = number
-  description = "Number of worker nodes."
-  default     = 3
+  description = "Number of worker nodes per zone."
+  default     = 1
 }
 
 variable "cos_plan" {
