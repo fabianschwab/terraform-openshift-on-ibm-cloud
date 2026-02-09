@@ -31,13 +31,3 @@ output "cluster_public_service_endpoint_url" {
   value       = ibm_container_vpc_cluster.cluster.public_service_endpoint_url
   description = "The public service endpoint URL."
 }
-
-output "logdna" {
-  value       = module.logging
-  description = "Info about LogDNA instance."
-}
-
-output "sysdig" {
-  value       = module.monitoring
-  description = "Info about SysDig instance."
-}
