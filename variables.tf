@@ -23,7 +23,7 @@ variable "ibm_region" {
 variable "ibm_zones" {
   type        = list(string)
   description = "Zones the resources should be created in."
-  default     = ["eu-de-3", "eu-de-2"]
+  default     = ["eu-de-2"]
 }
 
 ###################################
@@ -77,7 +77,7 @@ variable "openshift_kube_version" {
 variable "worker_count" {
   type        = number
   description = "Number of worker nodes per zone."
-  default     = 1
+  default     = 3
 }
 
 variable "cos_plan" {

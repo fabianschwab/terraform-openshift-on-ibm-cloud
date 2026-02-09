@@ -1,0 +1,25 @@
+# IBM Cloud API Key
+ibmcloud_api_key = "YOUR_IBM_CLOUD_API_KEY"
+
+# General Configuration
+prefix     = "fs-dev"
+ibm_region = "eu-de"
+ibm_zones  = ["eu-de-1","eu-de-2"]
+
+# Resource Group
+resource_group = "terraform-resource-group"
+
+# OpenShift Configuration
+openshift_flavor        = "bx2.4x16"
+openshift_kube_version  = "4.14_openshift"
+worker_count            = 3
+
+# Cloud Object Storage
+cos_plan     = "standard"
+cos_location = "global"
+
+# IAM Configuration
+enable_user_invite      = false
+users                   = ["example@email.com"]
+access_roles_platform   = ["Editor"]
+access_roles_services   = ["Manager"]

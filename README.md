@@ -4,7 +4,7 @@ This terraform example creates an OpenShift 4.x Cluster on an IBM Cloud VPC GEN2
 
 ## Infrastructure
 
-Main parts provisioned by terraform defined in `main.tf`. Used modules `logDNA` and `sysDig`.
+Main parts provisioned by terraform defined in `main.tf`.
 
 1. Resource group, to group all created resources together
 1. Virtual Private Cloud (VPC) Generation 2
@@ -16,66 +16,74 @@ Main parts provisioned by terraform defined in `main.tf`. Used modules `logDNA` 
 1. Access Group for easier rights management
 1. Access Group Policy to the resource group for all users with certain rights
 1. Invites Users and adds them to the access group
-1. Optional via Modules
-   1. LogDNA Service Instance
-   1. LogDNA Service Key
-   1. Connect LogDNA with OpenShift cluster
-   1. SysDig Service Instance
-   1. SysDig Service Key
-   1. Connect SysDig with OpenShift cluster
 
 ## Running the configuration
 
+### Initial Setup
+
+1. Copy the example variables file:
+
+```shell
+cp terraform.tfvars.example terraform.tfvars
+```
+
+2. Edit `terraform.tfvars` with your IBM Cloud API key and desired configuration
+
+3. Initialize Terraform:
+
 ```shell
 terraform init
+```
+
+4. Review the planned changes:
+
+```shell
 terraform plan
 ```
 
-For apply phase
+### Apply Configuration
 
 ```shell
 terraform apply
 ```
 
-For destroy phase
+### Destroy Infrastructure
 
 ```shell
 terraform destroy
 ```
 
+**Note:** After updating the provider version, run `terraform init -upgrade` to update the provider plugins.
+
 ## Requirements
 
-| Name      | Version  |
-| --------- | -------- |
-| terraform | >= v1.0  |
+| Name      | Version |
+| --------- | ------- |
+| terraform | >= v1.0 |
 
 ## Providers
 
 | Name | Version    |
 | ---- | ---------- |
-| ibm  | >= v1.41.0 |
+| ibm  | ~> v1.88.0 |
 
 ## Inputs
 
-| Name                    | Description                                                  | Type           | Default Value              |
-| ----------------------- | ------------------------------------------------------------ | -------------- | -------------------------- |
-| ibm_region              | Region                                                       | `string`       | `eu-de`                    |
-| ibm_zones               | One or more Zones                                            | `list(string)` | `[eu-de-3, eu-de-2]`       |
-| ibm_resource_group_name | Resource Group Name                                          | `string`       | `terraform-resource-group` |
-| prefix                  | Prefix for the naming convention                             | `string`       | `fs-dev`                   |
-| openshift_flavor        | The flavor of the VPC worker node that you want to use       | `string`       | `bx2.4x16`                 |
-| openshift_kube_version  | Version of cluster                                           | `string`       | -                          |
-| worker_count            | Number of nodes per zone. If single zone minimum are 2 nodes.| `int`          | 1                          |
-| cos_plan                | Plan for Cloud Object Storage                                | `string`       | `standard`                 |
-| cos_location            | Location for Cloud Object Storage                            | `string`       | `global`                   |
-| enable_logdna           | LogDNA Service                                               | `bool`         | `false`                    |
-| logdna_plan             | Plan for LogDNA                                              | `string`       | `lite`                     |
-| enable_sysdig           | Sysdig Service                                               | `bool`         | `false`                    |
-| sysdig_plan             | Plan for Sysdig                                              | `string`       | `lite`                     |
-| enable_user_invite      | If enabled, all users from variable `users` will be invited. | `bool`         | `false`                    |
-| users                   | List of user e-mail addresses                                | `list(string)` | -                          |
-| access_roles_platform   | List of valid platform roles                                 | `list(string)` | `[""Editor"]`              |
-| access_roles_services   | List of valid services roles                                 | `list(string)` | `["Manager"]`              |
+| Name                    | Description                                                   | Type           | Default Value              |
+| ----------------------- | ------------------------------------------------------------- | -------------- | -------------------------- |
+| ibm_region              | Region                                                        | `string`       | `eu-de`                    |
+| ibm_zones               | One or more Zones                                             | `list(string)` | `[eu-de-3, eu-de-2]`       |
+| ibm_resource_group_name | Resource Group Name                                           | `string`       | `terraform-resource-group` |
+| prefix                  | Prefix for the naming convention                              | `string`       | `fs-dev`                   |
+| openshift_flavor        | The flavor of the VPC worker node that you want to use        | `string`       | `bx2.4x16`                 |
+| openshift_kube_version  | Version of cluster                                            | `string`       | -                          |
+| worker_count            | Number of nodes per zone. If single zone minimum are 2 nodes. | `int`          | 1                          |
+| cos_plan                | Plan for Cloud Object Storage                                 | `string`       | `standard`                 |
+| cos_location            | Location for Cloud Object Storage                             | `string`       | `global`                   |
+| enable_user_invite      | If enabled, all users from variable `users` will be invited.  | `bool`         | `false`                    |
+| users                   | List of user e-mail addresses                                 | `list(string)` | -                          |
+| access_roles_platform   | List of valid platform roles                                  | `list(string)` | `[""Editor"]`              |
+| access_roles_services   | List of valid services roles                                  | `list(string)` | `["Manager"]`              |
 
 ## Outputs
 
@@ -86,8 +94,6 @@ terraform destroy
 | cluster_name | Generated name of the cluster | `string` |
 | cluster_id   | Unique id of the cluster      | `string` |
 | cluster_url  | Url of the RHOS dashboard     | `string` |
-| logdna       | Url, ID of the instance       | `object` |
-| sysdig       | Url, ID of the instance       | `object` |
 
 ## References
 

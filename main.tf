@@ -1,9 +1,10 @@
 # Terraform version with community provider
 terraform {
+  required_version = ">= 1.0"
   required_providers {
     ibm = {
       source  = "IBM-Cloud/ibm"
-      version = "1.41.0"
+      version = "~> 1.88.0"
     }
   }
 }
@@ -66,9 +67,14 @@ resource "ibm_iam_user_invite" "invite_user" {
 
 # Virtual Private Cloud
 resource "ibm_is_vpc" "vpc" {
-  name = "${var.prefix}-vpc-gen2"
-
+  name           = "${var.prefix}-vpc-gen2"
   resource_group = ibm_resource_group.resource_group.id
+
+  tags = [
+    "terraform",
+    "openshift",
+    var.prefix
+  ]
 }
 
 # Public Gateways to access the internet
@@ -108,15 +114,25 @@ data "ibm_is_vpc" "vpc_data" {
 
 # Openshift multizone cluster on VPC
 resource "ibm_container_vpc_cluster" "cluster" {
-  flavor = var.openshift_flavor
-  name   = "${var.prefix}-cluster"
-  vpc_id = ibm_is_vpc.vpc.id
+  flavor            = var.openshift_flavor
+  name              = "${var.prefix}-cluster"
+  vpc_id            = ibm_is_vpc.vpc.id
+  resource_group_id = ibm_resource_group.resource_group.id
+  kube_version      = var.openshift_kube_version
+  worker_count      = var.worker_count
+
+  # Required for Gen2 VPC with Openshift to back up Openshift registry
+  cos_instance_crn = ibm_resource_instance.cos_instance.crn
+
+  # Wait for worker nodes to be ready
+  wait_till = "IngressReady"
 
   depends_on = [
     ibm_is_vpc.vpc,
     ibm_is_subnet.subnet,
     ibm_is_public_gateway.public_gateway,
-    data.ibm_is_vpc.vpc_data
+    data.ibm_is_vpc.vpc_data,
+    ibm_resource_instance.cos_instance
   ]
 
   dynamic "zones" {
@@ -127,31 +143,57 @@ resource "ibm_container_vpc_cluster" "cluster" {
     }
   }
 
-  # Required for Gen2 VPC with Openshift to back up Openshift registry
-  cos_instance_crn = ibm_resource_instance.cos_instance.crn
+  tags = [
+    "terraform",
+    "openshift",
+    var.prefix
+  ]
 
-  resource_group_id = ibm_resource_group.resource_group.id
-  kube_version      = var.openshift_kube_version
-  worker_count      = var.worker_count
+  timeouts {
+    create = "3h"
+    delete = "2h"
+    update = "3h"
+  }
 }
 
 # Cloud Object Storage for Openshift Cluster
 resource "ibm_resource_instance" "cos_instance" {
-  name     = "${var.prefix}-cos"
-  service  = "cloud-object-storage"
-  plan     = var.cos_plan
-  location = var.cos_location
-
+  name              = "${var.prefix}-cos"
+  service           = "cloud-object-storage"
+  plan              = var.cos_plan
+  location          = var.cos_location
   resource_group_id = ibm_resource_group.resource_group.id
+
+  tags = [
+    "terraform",
+    "openshift",
+    var.prefix
+  ]
+
+  timeouts {
+    create = "15m"
+    update = "15m"
+    delete = "15m"
+  }
 }
 
 # Gen 2 VPC denies all incoming traffic by default to the worker nodes.
 # Therefore ports 30000-32767 must be bound to the default security group, which is created when the VPC is created.
-resource "ibm_is_security_group_rule" "default_security_group" {
+resource "ibm_is_security_group_rule" "default_security_group_nodeport" {
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
-  tcp {
-    port_min = 30000
-    port_max = 32767
-  }
+  remote    = "0.0.0.0/0"
+  protocol  = "tcp"
+  port_min  = 30000
+  port_max  = 32767
+}
+
+# Allow ICMP traffic for network diagnostics
+resource "ibm_is_security_group_rule" "default_security_group_icmp" {
+  group     = ibm_is_vpc.vpc.default_security_group
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+  protocol  = "icmp"
+  type      = 8
+
 }
