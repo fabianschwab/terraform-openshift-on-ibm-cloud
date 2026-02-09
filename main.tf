@@ -155,37 +155,3 @@ resource "ibm_is_security_group_rule" "default_security_group" {
     port_max = 32767
   }
 }
-
-#########################
-# Logging and Monitoring
-#########################
-
-module "logging" {
-  # When logging enabled, module is executed
-  count = var.enable_logdna == true ? 1 : 0
-
-  # Module ./logDNA/main.tf
-  source = "./logDNA"
-
-  # Input variables
-  prefix            = var.prefix
-  ibm_region        = var.ibm_region
-  resource_group_id = ibm_resource_group.resource_group.id
-  plan              = var.logdna_plan
-  cluster_id        = ibm_container_vpc_cluster.cluster.id
-}
-
-module "monitoring" {
-  # When logging enabled, module is executed
-  count = var.enable_sysdig == true ? 1 : 0
-
-  # Module ./sysDig/main.tf
-  source = "./sysDig"
-
-  # Input variables
-  prefix            = var.prefix
-  ibm_region        = var.ibm_region
-  resource_group_id = ibm_resource_group.resource_group.id
-  plan              = var.sysdig_plan
-  cluster_id        = ibm_container_vpc_cluster.cluster.id
-}

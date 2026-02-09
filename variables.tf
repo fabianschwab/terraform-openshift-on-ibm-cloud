@@ -91,31 +91,3 @@ variable "cos_location" {
   description = "Location for Cloud Object Storage."
   default     = "global"
 }
-
-#########################
-# Logging and Monitoring
-#########################
-
-variable "enable_logdna" {
-  type        = bool
-  description = "If set to true, logDNA instance will be created and connected to the cluster."
-  default     = true
-}
-
-variable "logdna_plan" {
-  type        = string
-  description = "Plan for LogDNA (e.g. lite, 7-day, ...)."
-  default     = "lite"
-}
-
-variable "enable_sysdig" {
-  type        = bool
-  description = "If set to true, Sysdig instance will be created and connected to the cluster."
-  default     = true
-}
-
-variable "sysdig_plan" {
-  type        = string
-  description = "Plan for Sysdig (e.g. lite, graduated-tier, ...)."
-  default     = "lite"
-}
