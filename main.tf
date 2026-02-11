@@ -42,14 +42,13 @@ resource "ibm_iam_access_group" "access_group" {
   name = "${var.prefix}-access-group"
 }
 
-# Create a policy for the access group to that all users can see the resource group
+# Create a policy for the access group so that all users can see the resource group
 resource "ibm_iam_access_group_policy" "access_group_policy" {
   access_group_id = ibm_iam_access_group.access_group.id
-  roles           = concat(var.access_roles_platform, var.access_roles_services)
+  roles           = ["Reader", "Viewer", "Writer", "Manager"]
 
   resources {
-    resource_type = "resource-group"
-    resource      = ibm_resource_group.resource_group.id
+    resource_group_id = ibm_resource_group.resource_group.id
   }
 }
 

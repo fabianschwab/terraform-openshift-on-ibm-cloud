@@ -47,18 +47,6 @@ variable "users" {
   default     = ["example@email.com"]
 }
 
-variable "access_roles_platform" {
-  type        = list(string)
-  description = "Platform access roles (`viewer`, `operator`, `editor`, `administrator`) for the resouce group."
-  default     = ["Editor"]
-}
-
-variable "access_roles_services" {
-  type        = list(string)
-  description = "Service access roles (`reader`, `writer`, `manager`) for the resouce group."
-  default     = ["Manager"]
-}
-
 ############
 # Openshift
 ############

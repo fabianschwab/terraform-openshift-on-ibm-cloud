@@ -21,5 +21,3 @@ cos_location = "global"
 # IAM Configuration
 enable_user_invite      = false
 users                   = ["example@email.com"]
-access_roles_platform   = ["Editor"]
-access_roles_services   = ["Manager"]

@@ -4,8 +4,8 @@ kind: ConsoleNotification
 metadata:
   name: security-notice
 spec:
-  backgroundColor: '#616161'
-  color: '#fff'
+  backgroundColor: "#616161"
+  color: "#fff"
   location: BannerTop
   text: >-
-    This cluster is for development only. Expect that it get resettet from time to time.
+    This cluster is for development only. Expect that it get resettet from time to time. There will be no notice before the reset.
