@@ -41,10 +41,17 @@ variable "enable_user_invite" {
   description = "If enabled, all users from variable `users` will be invited."
   default     = false
 }
+
 variable "users" {
   type        = list(string)
   description = "E-Mail addresses of all users, which should be invited to this project. When enabled."
   default     = ["example@email.com"]
+}
+
+variable "access_rights" {
+  type        = list(string)
+  description = "Access rights on the resource group and its resources"
+  default     = ["Reader", "Viewer", "Writer", "Manager"]
 }
 
 ############

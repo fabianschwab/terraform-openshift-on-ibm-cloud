@@ -45,7 +45,7 @@ resource "ibm_iam_access_group" "access_group" {
 # Create a policy for the access group so that all users can see the resource group
 resource "ibm_iam_access_group_policy" "access_group_policy" {
   access_group_id = ibm_iam_access_group.access_group.id
-  roles           = ["Reader", "Viewer", "Writer", "Manager"]
+  roles           = var.access_rights
 
   resources {
     resource_group_id = ibm_resource_group.resource_group.id
